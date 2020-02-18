@@ -11,8 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'TodoController@index');
+Route::get('/create', 'TodoController@create');
+Route::post('/store', 'TodoController@store');
 
-Route::resource('/tasks', 'TaskController');
