@@ -9,24 +9,26 @@
 </head>
 
 <body class="bg-dark">
-    <h2 class="text-light p-3">Create New Todo:</h2>
+    <h2 class="text-light p-3">Edit your Todo:</h2>
     <div class="container">
         
        
-        {!! Form::open(['action' => 'TodoController@store', 'method' => 'POST']) !!}
+        {!! Form::open(['action' => ['TodoController@update', $todo->id], 'method' => 'POST']) !!}
         <div class="form-group">
 
             {{Form::label('morning', 'What will you do in the morning?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('morning', null, ["class"=> 'form-control'])}};
+            {{Form::text('morning', $todo->morning, ["class"=> 'form-control'])}};
 
             {{Form::label('afternoon', 'What will you do in the afternoon?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('afternoon', null, ["class"=> 'form-control'])}};
+            {{Form::text('afternoon', $todo->afternoon, ["class"=> 'form-control'])}};
 
             {{Form::label('evening', 'What will you do in the evening?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('evening', null, ["class"=> 'form-control'])}};
+            {{Form::text('evening', $todo->evening, ["class"=> 'form-control'])}};
 
             {{Form::label('tomorrow', 'What will you do tomorrow?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('tomorrow', null, ["class"=> 'form-control'])}};
+            {{Form::text('tomorrow', $todo->tomorrow, ["class"=> 'form-control'])}};
+
+            {{Form::hidden('_method', 'PUT')}}
 
             {{Form::submit('Submit', ['class'=>'btn btn-primary mt-3'])}}
         
