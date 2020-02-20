@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Todo;
 
+
 class TodoController extends Controller
 {
     public function index(Request $request)
@@ -58,6 +59,7 @@ class TodoController extends Controller
     {
         $todo = Todo::find($id);
         $todo->delete();
+
 
         return redirect('todos.index')->with('message','task has been removed.');
     }

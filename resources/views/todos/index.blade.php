@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="sweetalert2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
     <title>{{config('app.name', 'MyApp')}}</title>
 </head>
@@ -48,7 +49,7 @@
                 
                 {!!Form::open(['action' => ['TodoController@destroy', $todo->id], 'method' => 'POST'])!!}
                     {{Form::hidden('_method', 'DELETE')}}
-                    {{Form::submit('Delete', ['class' => 'btn btn-outline-danger'])}}
+                    {{Form::submit('Delete', ['class' => 'btn btn-outline-danger'], null, array('id' => 'onClick'))}}
                 
                 {!!Form::close()!!}
             </div>
@@ -59,8 +60,20 @@
     </table>
     <a class="btn btn-outline-success ml-3 mt-3" href="/create" role="button">Add new todo</a>
     
+
     
 </div>
+        <script>
+            $(document).ready(function(){
+                $("#onClick").click(function(){
+                    swal("Hello world!");
+                });
+            });
+        </script>
+        
+    
+
+
     
     
 </body>

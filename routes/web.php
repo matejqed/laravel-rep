@@ -1,5 +1,7 @@
 <?php
 
+
+use RealRashid\SweetAlert\Facades\Alert;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
