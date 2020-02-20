@@ -46,7 +46,7 @@
                 <td>{{$todo->tomorrow}}</td>
                 <td>
                 <div class="d-flex">
-                    <a class="btn btn-outline-info mr-2" data-toggle="modal" data-target="#EditModal" href="/edit/{{$todo->id}}" role="button">Edit</a>
+                <a class="btn btn-outline-info mr-2" data-toggle="modal" data-morning="{{$todo->morning}}" data-afternoon="{{$todo->afternoon}}" data-evening="{{$todo->evening}}" data-tomorrow="{{$todo->tomorrow}}" data-target="#EditModal" data-todoid="{{$todo->id}}" href="/edit/{{$todo->id}}" role="button">Edit</a>
                 
                 
                 {!!Form::open(['action' => ['TodoController@destroy', $todo->id], 'method' => 'POST'])!!}
@@ -162,7 +162,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content bg-dark">
         <div class="modal-header">
-          <h5 class="modal-title text-light" id="EditModalLongTitle">Edit your To Do List</h5>
+          <h5 class="modal-title text-light" id="EditModalLongTitle">Edit To Do List</h5>
           <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -171,39 +171,53 @@
           
             {!! Form::open(['action' => ['TodoController@update', $todo->id], 'method' => 'POST']) !!}
         <div class="form-group">
+            <input type="hidden" name="todoid" id="todo_id">
+            {{Form::label('morning', 'What will you do in the morning?', ['class'=> 'text-light pt-2', 'id' => 'morning'])}}
+            {{Form::text('morning', $todo->morning, ["class"=> 'form-control'])}}
 
-            {{Form::label('morning', 'What will you do in the morning?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('morning', $todo->morning, ["class"=> 'form-control'])}};
+            {{Form::label('afternoon', 'What will you do in the afternoon?', ['class'=> 'text-light pt-2', 'id' => 'afternoon'])}}
+            {{Form::text('afternoon', $todo->afternoon, ["class"=> 'form-control'])}}
 
-            {{Form::label('afternoon', 'What will you do in the afternoon?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('afternoon', $todo->afternoon, ["class"=> 'form-control'])}};
+            {{Form::label('evening', 'What will you do in the evening?', ['class'=> 'text-light pt-2', 'id' => 'evening'])}}
+            {{Form::text('evening', $todo->evening, ["class"=> 'form-control'])}}
 
-            {{Form::label('evening', 'What will you do in the evening?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('evening', $todo->evening, ["class"=> 'form-control'])}};
-
-            {{Form::label('tomorrow', 'What will you do tomorrow?', ['class'=> 'text-light pt-2'])}};
-            {{Form::text('tomorrow', $todo->tomorrow, ["class"=> 'form-control'])}};
+            {{Form::label('tomorrow', 'What will you do tomorrow?', ['class'=> 'text-light pt-2', 'id' => 'tomorrow'])}}
+            {{Form::text('tomorrow', $todo->tomorrow, ["class"=> 'form-control'])}}
 
             {{Form::hidden('_method', 'PUT')}}
 
-            {{Form::submit('Submit', ['class'=>'btn btn-primary mt-3'])}}
+            {{Form::submit('Submit', ['class'=>'btn btn-outline-primary mt-3'])}}
         
-            <a class="btn btn-outline-secondary mt-3 ml-3" href="/todos.index" role="button">Cancel</a>
+            <a class="btn btn-outline-secondary mt-3 ml-3" href="/todos.index" role="button" data-dismiss="modal">Cancel</a>
         </div>
         {!! Form::close() !!}
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-success">Save changes</button>
-        </div>
+        </div>        
       </div>
     </div>
   </div>
           
 
 
-
+<script>
+    $('#EditModal').on('show.bs.modal', function (event) {
+       
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var morning = button.data('morning') // Extract info from data-* attributes
+  var afternoon = button.data('afternoon') // Extract info from data-* attributes
+  var evening = button.data('evening') // Extract info from data-* attributes
+  var tomorrow = button.data('tomorrow') // Extract info from data-* attributes
+  var todo_id = button.data('todoid') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-body #morning').val(morning);
+  modal.find('.modal-body #afternoon').val(afternoon);
+  modal.find('.modal-body #evening').val(evening);
+  modal.find('.modal-body #tomorrow').val(tomorrow);
+  modal.find('.modal-body #todo_id').val(todo_id);
+})
+</script>
 
     
     
