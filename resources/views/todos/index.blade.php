@@ -46,7 +46,7 @@
                 <td>{{$todo->tomorrow}}</td>
                 <td>
                 <div class="d-flex">
-                    <a class="btn btn-outline-info mr-2" href="/edit/{{$todo->id}}" role="button">Edit</a>
+                    <a class="btn btn-outline-info mr-2" data-toggle="modal" data-target="#EditModal" href="/edit/{{$todo->id}}" role="button">Edit</a>
                 
                 
                 {!!Form::open(['action' => ['TodoController@destroy', $todo->id], 'method' => 'POST'])!!}
@@ -60,7 +60,7 @@
             @endforeach
         </tbody>
     </table>
-    <a class="btn btn-outline-success ml-3 mt-3" href="/create" role="button">Add new todo</a>
+    <a class="btn btn-outline-success ml-3 mt-3" data-toggle="modal" data-target="#AddModal" href="/create" role="button">Add new todo</a>
     
 
     
@@ -116,7 +116,90 @@
   </div>
 
 
+  
+  <!-- AddModal -->
+  <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="AddModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <h5 class="modal-title text-light" id="AddModalLongTitle">Add new list</h5>
+          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-light">
+          
+            {!! Form::open(['action' => 'TodoController@store', 'method' => 'POST']) !!}
+            <div class="form-group">
+    
+                {{Form::label('morning', 'What will you do in the morning?', ['class'=> 'text-light pt-2'])}}
+                {{Form::text('morning', null, ["class"=> 'form-control'])}}
+    
+                {{Form::label('afternoon', 'What will you do in the afternoon?', ['class'=> 'text-light pt-2'])}}
+                {{Form::text('afternoon', null, ["class"=> 'form-control'])}}
+    
+                {{Form::label('evening', 'What will you do in the evening?', ['class'=> 'text-light pt-2'])}}
+                {{Form::text('evening', null, ["class"=> 'form-control'])}}
+    
+                {{Form::label('tomorrow', 'What will you do tomorrow?', ['class'=> 'text-light pt-2'])}}
+                {{Form::text('tomorrow', null, ["class"=> 'form-control'])}}
+    
+                {{Form::submit('Submit', ['class'=>'btn btn-outline-primary mt-3'])}}
+            
+                <a class="btn btn-outline-secondary mt-3 ml-3" href="/todos.index" role="button" data-dismiss="modal">Cancel</a>
+            </div>
+            {!! Form::close() !!}   
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- EditModal -->
+  <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="EditModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <h5 class="modal-title text-light" id="EditModalLongTitle">Edit your To Do List</h5>
+          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-light">
+          
+            {!! Form::open(['action' => ['TodoController@update', $todo->id], 'method' => 'POST']) !!}
+        <div class="form-group">
+
+            {{Form::label('morning', 'What will you do in the morning?', ['class'=> 'text-light pt-2'])}};
+            {{Form::text('morning', $todo->morning, ["class"=> 'form-control'])}};
+
+            {{Form::label('afternoon', 'What will you do in the afternoon?', ['class'=> 'text-light pt-2'])}};
+            {{Form::text('afternoon', $todo->afternoon, ["class"=> 'form-control'])}};
+
+            {{Form::label('evening', 'What will you do in the evening?', ['class'=> 'text-light pt-2'])}};
+            {{Form::text('evening', $todo->evening, ["class"=> 'form-control'])}};
+
+            {{Form::label('tomorrow', 'What will you do tomorrow?', ['class'=> 'text-light pt-2'])}};
+            {{Form::text('tomorrow', $todo->tomorrow, ["class"=> 'form-control'])}};
+
+            {{Form::hidden('_method', 'PUT')}}
+
+            {{Form::submit('Submit', ['class'=>'btn btn-primary mt-3'])}}
+        
+            <a class="btn btn-outline-secondary mt-3 ml-3" href="/todos.index" role="button">Cancel</a>
+        </div>
+        {!! Form::close() !!}
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-success">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
           
 
 
