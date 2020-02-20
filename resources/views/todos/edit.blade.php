@@ -32,7 +32,7 @@
 
             {{Form::submit('Submit', ['class'=>'btn btn-primary mt-3'])}}
         
-        
+            <a class="btn btn-outline-secondary mt-3 ml-3" href="/todos.index" role="button">Cancel</a>
         </div>
         {!! Form::close() !!}
 </div>

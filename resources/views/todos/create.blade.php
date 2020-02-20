@@ -28,11 +28,13 @@
             {{Form::label('tomorrow', 'What will you do tomorrow?', ['class'=> 'text-light pt-2'])}};
             {{Form::text('tomorrow', null, ["class"=> 'form-control'])}};
 
-            {{Form::submit('Submit', ['class'=>'btn btn-primary mt-3'])}}
+            {{Form::submit('Submit', ['class'=>'btn btn-outline-primary mt-3'])}}
         
-        
+            <a class="btn btn-outline-secondary mt-3 ml-3" href="/todos.index" role="button">Cancel</a>
         </div>
         {!! Form::close() !!}
+
+        
 </div>
 
 

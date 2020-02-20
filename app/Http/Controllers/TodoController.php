@@ -10,7 +10,7 @@ class TodoController extends Controller
 {
     public function index(Request $request)
     {
-        $todos = Todo::orderBy('created_at','desc')->paginate(10);
+        $todos = Todo::orderBy('created_at','desc')->paginate(8);
         return view('todos.index', ['todos' => $todos]);
     }
 

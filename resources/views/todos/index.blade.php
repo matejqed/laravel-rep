@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <title>{{config('app.name', 'MyApp')}}</title>
 </head>
@@ -18,7 +20,7 @@
 
     <div class="container">
         
-    <a class="btn btn-outline-secondary ml-3 my-3" href="/" role="button">Go to Homepage</a>
+    <a class="btn btn-outline-secondary text-light ml-3 my-3" data-toggle="modal" data-target="#HomeModal">Go to Homepage</a>
     @if (Session::has('message'))
     <div class="alert alert-success ml-3">
         {{ Session::get('message') }}
@@ -49,7 +51,7 @@
                 
                 {!!Form::open(['action' => ['TodoController@destroy', $todo->id], 'method' => 'POST'])!!}
                     {{Form::hidden('_method', 'DELETE')}}
-                    {{Form::submit('Delete', ['class' => 'btn btn-outline-danger'], null, array('id' => 'onClick'))}}
+                    {{Form::submit('Delete', ['class' => 'btn btn-outline-danger deletebtn'])}}
                 
                 {!!Form::close()!!}
             </div>
@@ -62,16 +64,62 @@
     
 
     
-</div>
-        <script>
-            $(document).ready(function(){
-                $("#onClick").click(function(){
-                    swal("Hello world!");
+<!--
+    <script> 
+
+        const deletebtn = document.getElementsByClassName('deletebtn');
+
+        deletebtn.addEventListener('click', function(e){
+            e.preventDefault();
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this list!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your list has been deleted!", {
+                    icon: "success",
+                    });
+                } else {
+                    swal("Your list is safe!");
+                }
                 });
-            });
-        </script>
-        
+        });
+
+    </script>
+-->
     
+
+  
+  <!-- HomeModal -->
+  <div class="modal fade" id="HomeModal" tabindex="-1" role="dialog" aria-labelledby="HomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="HomeModalLabel">Are you sure you want to quit now?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          But it's so nice here.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          <a href="/" role="button" class="btn btn-outline-success">Yes, Continue</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- EditModal -->
+          
+
+
 
 
     
