@@ -49,48 +49,30 @@
                 <a class="btn btn-outline-info mr-2" data-toggle="modal" data-morning="{{$todo->morning}}" data-afternoon="{{$todo->afternoon}}" data-evening="{{$todo->evening}}" data-tomorrow="{{$todo->tomorrow}}" data-target="#EditModal" data-todoid="{{$todo->id}}" href="/edit/{{$todo->id}}" role="button">Edit</a>
                 
                 
-                {!!Form::open(['action' => ['TodoController@destroy', $todo->id], 'method' => 'POST'])!!}
-                    {{Form::hidden('_method', 'DELETE')}}
-                    {{Form::submit('Delete', ['class' => 'btn btn-outline-danger deletebtn'])}}
                 
-                {!!Form::close()!!}
+
+
+                  
+
+                {!! Form::open(['action' => ['TodoController@destroy', $todo->id],'method' => 'POST']) !!}
+                {{Form::hidden('_method', 'DELETE')}}
+                <a href="/delete/{{$todo->id}}" onclick="" class="btn btn-outline-danger button-delete" data-id="{{$todo->id}}">Delete</a>
+                {!! Form::close() !!}
+
+
+
             </div>
                 </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    {{ $todos->links() }}
     <a class="btn btn-outline-success ml-3 mt-3" data-toggle="modal" data-target="#AddModal" href="/create" role="button">Add new todo</a>
     
 
     
-<!--
-    <script> 
 
-        const deletebtn = document.getElementsByClassName('deletebtn');
-
-        deletebtn.addEventListener('click', function(e){
-            e.preventDefault();
-            swal({
-                title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this list!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                })
-                .then((willDelete) => {
-                if (willDelete) {
-                    swal("Poof! Your list has been deleted!", {
-                    icon: "success",
-                    });
-                } else {
-                    swal("Your list is safe!");
-                }
-                });
-        });
-
-    </script>
--->
     
 
   
@@ -169,7 +151,7 @@
         </div>
         <div class="modal-body text-light">
           
-            {!! Form::open(['action' => ['TodoController@update', $todo->id], 'method' => 'POST']) !!}
+            {!! Form::open(['action' => ['TodoController@update', $todo->id], 'method' => 'POST', 'id' => 'todo_form']) !!} <!-- naci id od forme-->
         <div class="form-group">
             <input type="hidden" name="todoid" id="todo_id">
             {{Form::label('morning', 'What will you do in the morning?', ['class'=> 'text-light pt-2', 'id' => 'morning'])}}
@@ -216,9 +198,85 @@
   modal.find('.modal-body #evening').val(evening);
   modal.find('.modal-body #tomorrow').val(tomorrow);
   modal.find('.modal-body #todo_id').val(todo_id);
+  console.log("test::", $("#todo_form"));
+  $('#todo_form').attr('action', 'http://laravel-rep.test/update/' + todo_id)
+   // $(todo_id).attr(href= ); uhvatit formu i porimijenit attr da mi ide na moju formu
 })
+
+
+$('.button-delete').on('click', function (e) {
+  e.preventDefault();
+  const url = $(this).attr('href');
+  swal({
+        title: 'Are you sure?',
+        text: 'You will not be able to recover this To Do List!',
+        type: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes, delete it',
+        
+      }).then(function(value) {
+      if (value) {
+          window.location.href = url;
+      }
+  });
+});
+
+
+
+
 </script>
 
+
+
+
+
+<!--
+swal({
+  title: 'Are you sure?',
+  text: 'Your will not be able to recover this To Do List!',
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes, delete it',
+  cancelButtonText: 'Cancel',
+  closeOnConfirm: false,
+  closeOnCancel: false
+},
+function(){
+  swal('Deleted!', 'Your To Do List has been deleted.', 'success');
+});
+
+
+
+
+
+
+
+$('.button-delete').on('click', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    swal({
+          title: 'Are you sure?',
+          text: 'Your will not be able to recover this To Do List!',
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it',
+          cancelButtonText: 'Cancel',
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function() {
+            $.ajax({
+                type: "POST",
+                url: "{{url('/destroy')}}",
+                data: {id:id},
+                success: function (data) {
+                      //
+                    }         
+            });
+    });
+});
+-->
     
     
 </body>

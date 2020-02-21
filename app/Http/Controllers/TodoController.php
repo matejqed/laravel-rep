@@ -55,12 +55,13 @@ class TodoController extends Controller
         return redirect('todos.index')->with('message','task has been updated successfully!');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $todo = Todo::find($id);
+        $todo = Todo::find($request->id);
         $todo->delete();
 
 
         return redirect('todos.index')->with('message','task has been removed.');
     }
 }
+
