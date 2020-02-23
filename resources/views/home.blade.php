@@ -13,8 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                        <a href="/todos/create" class="btn btn-primary mb-3">Create a List</a>
+                    <h3>Your To Do Lists</h3>
                 </div>
             </div>
         </div>

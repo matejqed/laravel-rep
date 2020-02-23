@@ -28,6 +28,7 @@ class TodoController extends Controller
         $todo->afternoon = $request->get('afternoon');
         $todo->evening = $request->get('evening');
         $todo->tomorrow = $request->get('tomorrow');
+        $todo->user_id = auth()->user()->id;
 
         $todo->save();
 
